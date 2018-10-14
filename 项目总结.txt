@@ -1,0 +1,86 @@
+1.  ./config/index.js中,proxyTable中可以设置地址代理
+    （可以通过这里设置所需跨域的地址，或者为static文件夹设置一个代理地址）
+
+2.  ./gitignore当中,记载的是上传至git上是，git会自动忽略掉那些类型的文件
+
+3.  引用字体图标:先从图标制作网上下载下来,然后获取.eot .ttf .svg .wolf后缀的文件，
+    然后定义@font-face,并设置font-family(字体名称),src(以url形式引入4个文件并设置format)
+    最后,要调用图标时通过content调用即可
+
+4.  神仙图(sprit)
+	图标的另外一个实现方式。可以通过CSS属性当中的background自由操作已经制作好的图标图合集
+	常用到的属性:background-size(设置原图的大小),background-position(设置起始的切割位置)
+ 
+
+5.  scss:
+	理解:scss是sass的同类,只是语法上的不同而已。
+	用法:scss可以定义类似于变量之类的东西。当需要使用时,通过在style标签中调用,直接为相对因的属性赋值即可
+	     亦可以通过@mixin (名称)的方式（个人理解：可复用功能样式块,类似于清除浮动等）,通过@include （名称）()调用即可
+
+
+6.  移动端当中,不同手机可能会对1px的显示效果是不同的，所以1px边框可能会受影响。
+    解决方案:引入border.css
+
+7.  通常一个根组件可以先进行一次请求,然后再把数据分别分配到各个子组件，这样可以减少请求的次数
+
+
+...matState({mapState})
+	对vuex(state)中的数据进行展开运算,可以直接将state中的数据映射到data的数据当中
+
+keep-alive(exclude,activated,deactivated)
+	keep-alive的作用是让组件在页面跳转之后，将数据缓存到内存当中，从而提高性能
+	exclude:即该组件不需要缓存，每次跳转还是继续请求
+	activated：通常出现在keep-alive出现的场景；虽说对页面进行了缓存，但是如果我还是想在页面跳转的时候（进入页面）进行某些操作，就可以写到这个钩子里面
+	deactivated：上面那个的相反，即退出页面
+
+vuex
+	state:vuex中用于存储数据,需要通过mutation进行修改
+	action:vuex中通过dispatch派发给其它组件触发,从而申请进行mutation（据说是异步操作的时候才会用到，这个项目之中好像用不用都关系不大）
+	mutation:vuex中通过commit派发给其它组件触发，从而达到最终修改mutation中的数据为目的。
+
+v-for循环中的双层循环
+	v-for=item in list
+		v-for=littleItem in item
+
+better-scroll当中的狗比bug，它会默认影响click事件的触发，使click事件无效
+	解决方案:this.scroll = new BScroll(this.$refs.wrapper,{click:true});
+		 通过在参数中设置click:true
+
+在vue里面动态生成的路径无法被url-loader识别到
+      解决方法一:可以把图片等资源放置到static目录下，这样就可以直接写路径
+      解决方法二:可以先在变量里面先进行require
+
+当对列表想分页显示时，可以通过forEach循环中的index进行计算当前属于第几页
+代码如下:this.iconLists.forEach((item,index) => {
+                var page = Math.floor(index / 8);
+                if(!pages[page])
+                {
+                    pages[page] = [];
+                }
+		pages[page].push(item);
+
+vue的递归渲染(组件的name派上了用场)
+	作用：递归渲染通常是为应付数据当中出现的一套嵌套一套的情况,此时在组件当中,通过组件的名称来写成一个标签，并再次进行渲染
+
+flex布局当中,子元素设置min-width为0,默认宽度则不会超出父元素高度
+同时,子元素的子元素内部的文字也要同时设置文字省略三件套才行
+
+穿透选择器？？（好像不太灵，没搞懂）
+
+ref的用法与意义:
+	     个人理解来说,它可以通过在此组件的标签上设置ref,然后在this.$refs中获取
+	     vue也直接通过原来原生js中的getElementByid等的方式来获取元素(ByClassName不知道为什么好像不行),但是好像官方推荐用ref来操作
+	
+
+动态改变url地址:this.$route.push(xxx);
+
+document.documentElement === document.body
+
+template最好就不要出现逻辑运算,可以放到computed当中进行
+
+当你绑定了全局事件之后(比如window.addEventListener)，使用完之后，要及时对全局对象进行解绑,不然会影响到其它的组件
+
+vue-awesome-swiper的设置(observe,observeParents等，不然页面跳转以后好像会失效)
+
+在./router/index.js当中，设置scrollBehavior（to,from,savePosition）{return {x:0,y:0}}
+因为在进行了路由跳转之后，如果不对其进行设置，页面会停留在原来位置的位置，所以要对其设置，从而跳转后回到顶部

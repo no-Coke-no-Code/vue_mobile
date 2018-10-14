@@ -1,0 +1,26 @@
+@import "./variable.scss";
+
+@font-face {
+    font-family: "vue_mobile";
+    src: url("./font/font_header/iconfont.eot") format('embedded-opentype'),
+         url("./font/font_header/iconfont.svg") format('svg'),
+         url("./font/font_header/iconfont.ttf") format('truetype'),
+         url("./font/font_header/iconfont.woff") format('woff');
+}
+[class^="icon-"]
+{
+    font-family: "vue_mobile";
+    font-size: $iconSize;
+}
+.icon-back::before
+{
+    content: "\e624";
+}
+.icon-search::before
+{
+    content: "\e632";
+}
+.icon-dropDown::before
+{
+    content: "\e62d";
+}
